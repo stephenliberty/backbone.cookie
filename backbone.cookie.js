@@ -19,9 +19,25 @@ define(['backbone', 'underscore'], function (Backbone, _) {
             }
         },
         
+        get: function (name) {
+            if(name == 'value') {
+                var value = this.attributes[name];
+                if(value[0] == '"') {
+                    value = value.slice(1, value.length - 1);
+                }
+                return decodeURIComponent(value);
+            } else {
+                return this.attributes[name];
+            }
+        },
+        
         save: function () {
             var pieces = [];
-            pieces.push(this.get('name').concat("=", encodeURIComponent(this.get('value'))));
+            var value = this.get('value');
+            if(value.match(/[^\w\d]/)) {
+                value = '"'.concat(encodeURIComponent(value), '"');
+            }
+            pieces.push(this.get('name').concat("=", value));
             if (this.get('days')) {
                 var date = new Date();
                 date.setTime(date.getTime()+(this.get('days')*24*60*60*1000));
@@ -93,4 +109,4 @@ define(['backbone', 'underscore'], function (Backbone, _) {
             this._readCookies();
         }
     }));
-});
+})
