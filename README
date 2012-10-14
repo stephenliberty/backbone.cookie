@@ -1,0 +1,9 @@
+Backbone.Cookie
+===============
+
+A module that uses Backbone's collection to represent the cookies that you can read on a site. Also allows the creation and editing of these cookies. 
+
+License
+-------
+
+MIT - included in source.
